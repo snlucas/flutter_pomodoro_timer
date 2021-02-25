@@ -7,7 +7,10 @@ class Pomodoro extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: ThemeData.dark(),
+      theme: ThemeData(
+        brightness: Brightness.dark,
+        primaryColor: Color(0xFF2A2B4D),
+      ),
       home: HomePage(),
     );
   }

@@ -59,7 +59,7 @@ class HomePage extends StatelessWidget {
                     width: width / 2.5,
                     height: height / 8,
                     decoration: BoxDecoration(
-                      color: Color(0xFF2A2B4D),
+                      color: Theme.of(context).primaryColor,
                       borderRadius: BorderRadius.circular(10.0),
                     ),
                     child: Icon(Icons.play_arrow_sharp),
