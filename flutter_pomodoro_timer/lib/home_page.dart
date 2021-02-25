@@ -29,23 +29,40 @@ class HomePage extends StatelessWidget {
           child: Column(
             children: <Widget>[
               Center(
-                child: Container(
-                  padding: EdgeInsets.all(20.0),
-                  height: MediaQuery.of(context).size.height / 2.75,
-                  decoration: BoxDecoration(
-                    color: Colors.blue,
-                    borderRadius: BorderRadius.circular(100.0),
-                  ),
-                  child: CircularCountDownTimer(
-                    duration: 10 * 60,
-                    isReverse: true,
-                    textStyle: TextStyle(color: Colors.white),
-                    height: height,
-                    width: width,
-                    ringColor: Color(0xff0B0C19),
-                    fillColor: Colors.pink,
-                    backgroundColor: Color(0xFF2A2B4D),
-                    strokeCap: StrokeCap.round,
+                child: CircularCountDownTimer(
+                  duration: 10 * 60,
+                  isReverse: true,
+                  textStyle: TextStyle(color: Colors.white),
+                  height: height,
+                  width: width,
+                  ringColor: Color(0xff0B0C19),
+                  fillColor: Colors.pink,
+                  backgroundColor: Color(0xFF2A2B4D),
+                  strokeCap: StrokeCap.round,
+                ),
+              ),
+              Text(
+                'Label',
+                style: TextStyle(
+                  color: Colors.white,
+                ),
+              ),
+              Icon(
+                Icons.brightness_1_rounded,
+                color: Colors.blueGrey,
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 20.0),
+                child: GestureDetector(
+                  onTap: () {},
+                  child: Container(
+                    width: width / 2.5,
+                    height: height / 8,
+                    decoration: BoxDecoration(
+                      color: Color(0xFF2A2B4D),
+                      borderRadius: BorderRadius.circular(10.0),
+                    ),
+                    child: Icon(Icons.play_arrow_sharp),
                   ),
                 ),
               ),
