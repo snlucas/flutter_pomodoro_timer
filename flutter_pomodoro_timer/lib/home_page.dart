@@ -126,7 +126,7 @@ class _HomePageState extends State<HomePage> {
                 child: clock,
               ),
               Text(
-                'Label',
+                kWorkLabel,
                 style: TextStyle(
                   color: Colors.white,
                 ),
