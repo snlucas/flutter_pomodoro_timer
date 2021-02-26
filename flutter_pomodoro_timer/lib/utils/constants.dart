@@ -4,5 +4,7 @@ import 'package:flutter/material.dart';
 const Icon kPlayClockButton = Icon(Icons.play_arrow_sharp);
 const Icon kPauseClockButton = Icon(Icons.pause_sharp);
 
-// Number constants
-const int kMinutesDuration = 1;
+// Time constants
+const int kWorkDuration = 25;
+const int kShortBreakDuration = 5;
+const int kLongBreakDuration = 30;
