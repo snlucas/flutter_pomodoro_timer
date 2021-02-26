@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:circular_countdown_timer/circular_countdown_timer.dart';
+import 'package:flutter_pomodoro_timer/countdown_timer.dart';
 import 'package:flutter_pomodoro_timer/utils/constants.dart';
+import 'package:ndialog/ndialog.dart';
 
 class HomePage extends StatefulWidget {
   final List<Icon> timesCompleted = [];
@@ -25,8 +27,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   final CountDownController _clockController = CountDownController();
   Icon _clockButton = kPlayClockButton; // Initial value
-  bool _isClockStarted = false;
-  // Countdown timer duration
+  bool _isClockStarted = false; // Conditional flag
 
   // Change Clock button icon and controller
   void switchClockActionButton() {
@@ -55,6 +56,35 @@ class _HomePageState extends State<HomePage> {
     final double width = MediaQuery.of(context).size.width / 2;
     int indexTimesCompleted = 0;
 
+    CountDownTimer _countDownTimer = CountDownTimer(
+      duration: kWorkDuration,
+      fillColor: Colors.pink,
+      onComplete: () {
+        setState(() async {
+          widget.timesCompleted[indexTimesCompleted] = Icon(
+            Icons.brightness_1_rounded,
+            color: Colors.pink,
+            size: 5.0,
+          );
+          indexTimesCompleted++;
+          await NDialog(
+            dialogStyle: DialogStyle(titleDivider: true),
+            title: Text("Timer Completed"),
+            content: Text("Time to break."),
+            actions: <Widget>[
+              ElevatedButton(
+                  style: ButtonStyle(
+                    backgroundColor: MaterialStateColor.resolveWith(
+                        (states) => Colors.green),
+                  ),
+                  child: Text("Start a short break"),
+                  onPressed: () {}),
+            ],
+          ).show(context);
+        });
+      },
+    );
+
     CircularCountDownTimer clock = CircularCountDownTimer(
       controller: _clockController,
       isReverseAnimation: true,
@@ -62,26 +92,18 @@ class _HomePageState extends State<HomePage> {
       height: height,
       width: width,
       autoStart: false,
-      duration: kMinutesDuration * 60,
+      duration: _countDownTimer.duration * 60,
       isReverse: true,
       textStyle: TextStyle(color: Colors.white),
-      fillColor: Colors.pink,
+      fillColor: _countDownTimer.fillColor,
       backgroundColor: Color(0xFF2A2B4D),
       strokeCap: StrokeCap.round,
-      onComplete: () {
-        setState(() {
-          widget.timesCompleted[indexTimesCompleted] = Icon(
-            Icons.brightness_1_rounded,
-            color: Colors.pink,
-            size: 5.0,
-          );
-          indexTimesCompleted++;
-        });
-      },
+      onComplete: _countDownTimer.onComplete,
     );
 
     return Scaffold(
       appBar: AppBar(
+        elevation: 0.0,
         leading: IconButton(
           onPressed: () {},
           icon: Icon(Icons.headset_off),
