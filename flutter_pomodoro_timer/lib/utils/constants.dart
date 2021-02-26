@@ -13,3 +13,6 @@ const int kLongBreakDuration = 30;
 const String kWorkLabel = 'Work';
 const String kShortBreakLabel = 'Short break';
 const String kLongBreakLabel = 'Long break';
+
+// Number constants
+const int kWorkTimes = 4;
