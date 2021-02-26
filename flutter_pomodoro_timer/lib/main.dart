@@ -10,6 +10,7 @@ class Pomodoro extends StatelessWidget {
       theme: ThemeData(
         brightness: Brightness.dark,
         primaryColor: Color(0xFF2A2B4D),
+        fontFamily: 'Quicksand-Variable',
       ),
       home: HomePage(),
     );

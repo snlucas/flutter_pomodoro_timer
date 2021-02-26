@@ -1,12 +1,84 @@
 import 'package:flutter/material.dart';
 import 'package:circular_countdown_timer/circular_countdown_timer.dart';
+import 'package:flutter_pomodoro_timer/utils/constants.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
+  final List<Icon> timesCompleted = [];
+
+  HomePage() {
+    // Initialize times completed dot icons
+    for (var i = 0; i < 3; i++) {
+      timesCompleted.add(
+        Icon(
+          Icons.brightness_1_rounded,
+          color: Colors.blueGrey,
+          size: 5.0,
+        ),
+      );
+    }
+  }
+
+  @override
+  _HomePageState createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  final CountDownController _clockController = CountDownController();
+  Icon _clockButton = kPlayClockButton; // Initial value
+  bool _isClockStarted = false;
+  // Countdown timer duration
+
+  // Change Clock button icon and controller
+  void switchClockActionButton() {
+    if (_clockButton == kPlayClockButton) {
+      _clockButton = kPauseClockButton;
+
+      if (!_isClockStarted) {
+        // Processed on init
+        _isClockStarted = true;
+        _clockController.start();
+      } else {
+        // Processed on play
+        _clockController.resume();
+      }
+    } else {
+      // Processed on pause
+      _clockButton = kPlayClockButton;
+      _clockController.pause();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    // Clock Dimensions
+    // Half Screen Dimensions
     final double height = MediaQuery.of(context).size.height / 2;
     final double width = MediaQuery.of(context).size.width / 2;
+    int indexTimesCompleted = 0;
+
+    CircularCountDownTimer clock = CircularCountDownTimer(
+      controller: _clockController,
+      isReverseAnimation: true,
+      ringColor: Color(0xff0B0C19),
+      height: height,
+      width: width,
+      autoStart: false,
+      duration: kMinutesDuration * 60,
+      isReverse: true,
+      textStyle: TextStyle(color: Colors.white),
+      fillColor: Colors.pink,
+      backgroundColor: Color(0xFF2A2B4D),
+      strokeCap: StrokeCap.round,
+      onComplete: () {
+        setState(() {
+          widget.timesCompleted[indexTimesCompleted] = Icon(
+            Icons.brightness_1_rounded,
+            color: Colors.pink,
+            size: 5.0,
+          );
+          indexTimesCompleted++;
+        });
+      },
+    );
 
     return Scaffold(
       appBar: AppBar(
@@ -29,17 +101,7 @@ class HomePage extends StatelessWidget {
           child: Column(
             children: <Widget>[
               Center(
-                child: CircularCountDownTimer(
-                  duration: 10 * 60,
-                  isReverse: true,
-                  textStyle: TextStyle(color: Colors.white),
-                  height: height,
-                  width: width,
-                  ringColor: Color(0xff0B0C19),
-                  fillColor: Colors.pink,
-                  backgroundColor: Color(0xFF2A2B4D),
-                  strokeCap: StrokeCap.round,
-                ),
+                child: clock,
               ),
               Text(
                 'Label',
@@ -47,14 +109,21 @@ class HomePage extends StatelessWidget {
                   color: Colors.white,
                 ),
               ),
-              Icon(
-                Icons.brightness_1_rounded,
-                color: Colors.blueGrey,
+              SizedBox(
+                height: 10.0,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: widget.timesCompleted,
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 20.0),
                 child: GestureDetector(
-                  onTap: () {},
+                  onTap: () {
+                    setState(() {
+                      switchClockActionButton();
+                    });
+                  },
                   child: Container(
                     width: width / 2.5,
                     height: height / 8,
@@ -62,7 +131,7 @@ class HomePage extends StatelessWidget {
                       color: Theme.of(context).primaryColor,
                       borderRadius: BorderRadius.circular(10.0),
                     ),
-                    child: Icon(Icons.play_arrow_sharp),
+                    child: _clockButton,
                   ),
                 ),
               ),
