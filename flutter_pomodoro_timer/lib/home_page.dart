@@ -62,7 +62,7 @@ class _HomePageState extends State<HomePage> {
       height: height,
       width: width,
       autoStart: false,
-      duration: kMinutesDuration * 60,
+      duration: kWorkDuration * 60,
       isReverse: true,
       textStyle: TextStyle(color: Colors.white),
       fillColor: Colors.pink,
