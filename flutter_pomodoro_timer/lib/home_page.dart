@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:circular_countdown_timer/circular_countdown_timer.dart';
 import 'package:flutter_pomodoro_timer/utils/constants.dart';
+import 'package:flutter_pomodoro_timer/button_blur.dart';
 
 class HomePage extends StatefulWidget {
   final List<Icon> timesCompleted = [];
@@ -82,16 +83,16 @@ class _HomePageState extends State<HomePage> {
 
     return Scaffold(
       appBar: AppBar(
-        leading: IconButton(
+        leading: ButtonBlur(
+          icon: Icons.headset_off,
           onPressed: () {},
-          icon: Icon(Icons.headset_off),
         ),
         title: Text('Pomodoro'),
         centerTitle: true,
         actions: [
-          IconButton(
+          ButtonBlur(
+            icon: Icons.alarm_off,
             onPressed: () {},
-            icon: Icon(Icons.alarm_off),
           ),
         ],
       ),
